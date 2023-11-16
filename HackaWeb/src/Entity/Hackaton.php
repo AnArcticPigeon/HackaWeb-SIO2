@@ -16,16 +16,16 @@ class Hackaton
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateDeb')]
     private ?\DateTimeInterface $dateDeb = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateFin')]
     private ?\DateTimeInterface $dateFin = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateLimit')]
     private ?\DateTimeInterface $dateLimit = null;
 
-    #[ORM\Column]
+    #[ORM\Column ( name:'nbPlace')]
     private ?int $nbPlace = null;
 
     #[ORM\Column(length: 255)]
@@ -34,7 +34,7 @@ class Hackaton
     #[ORM\Column(length: 255)]
     private ?string $addresse = null;
 
-    #[ORM\OneToMany(mappedBy: 'leHackaton', targetEntity: Evenement::class)]
+    #[ORM\OneToMany(mappedBy: 'leHackaton', targetEntity: Evenement::class )]
     private Collection $lesEvenement;
 
     

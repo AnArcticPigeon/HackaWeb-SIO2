@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AtelierRepository::class)]
 class Atelier extends Evenement
 {
-    #[ORM\Column]
+    #[ORM\Column(name:'nbPlace')]
     private ?int $nbPlace = null;
 
     public function getNbPlace(): ?int

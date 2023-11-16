@@ -34,7 +34,7 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $sel = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true, name:'dateNaiss')]
     private ?\DateTimeInterface $dateNaiss = null;
 
     #[ORM\ManyToMany(targetEntity: Equipe::class, inversedBy: 'lesUtilisateur')]

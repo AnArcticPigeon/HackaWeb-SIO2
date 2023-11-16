@@ -16,13 +16,13 @@ class Equipe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, name:'nomEquipe')]
     private ?string $nomEquipe = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateInsc')]
     private ?\DateTimeInterface $dateInsc = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255 ,name:'numInsc')]
     private ?string $numInsc = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'lesEquipe')]
