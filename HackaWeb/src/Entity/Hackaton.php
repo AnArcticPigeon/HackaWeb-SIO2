@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HackatonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,17 @@ class Hackaton
 
     #[ORM\Column(length: 255)]
     private ?string $addresse = null;
+
+    #[ORM\OneToMany(mappedBy: 'leHackaton', targetEntity: Evenement::class)]
+    private Collection $lesEvenement;
+
+    
+
+    public function __construct()
+    {
+        $this->lesUtilisateur = new ArrayCollection();
+        $this->lesEvenement = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,4 +121,38 @@ class Hackaton
 
         return $this;
     }
+
+    
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getLesEvenement(): Collection
+    {
+        return $this->lesEvenement;
+    }
+
+    public function addLesEvenement(Evenement $lesEvenement): static
+    {
+        if (!$this->lesEvenement->contains($lesEvenement)) {
+            $this->lesEvenement->add($lesEvenement);
+            $lesEvenement->setLeHackaton($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesEvenement(Evenement $lesEvenement): static
+    {
+        if ($this->lesEvenement->removeElement($lesEvenement)) {
+            // set the owning side to null (unless already changed)
+            if ($lesEvenement->getLeHackaton() === $this) {
+                $lesEvenement->setLeHackaton(null);
+            }
+        }
+
+        return $this;
+    }
+
+ 
 }
