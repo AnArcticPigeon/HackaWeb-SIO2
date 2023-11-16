@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,16 @@ class Utilisateur
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateNaiss = null;
+
+    #[ORM\ManyToMany(targetEntity: Equipe::class, inversedBy: 'lesUtilisateur')]
+    private Collection $lesEquipe;
+
+   
+    public function __construct()
+    {
+        $this->lesHackaton = new ArrayCollection();
+        $this->lesEquipe = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,4 +135,30 @@ class Utilisateur
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getLesEquipe(): Collection
+    {
+        return $this->lesEquipe;
+    }
+
+    public function addLesEquipe(Equipe $lesEquipe): static
+    {
+        if (!$this->lesEquipe->contains($lesEquipe)) {
+            $this->lesEquipe->add($lesEquipe);
+        }
+
+        return $this;
+    }
+
+    public function removeLesEquipe(Equipe $lesEquipe): static
+    {
+        $this->lesEquipe->removeElement($lesEquipe);
+
+        return $this;
+    }
+
+
 }
