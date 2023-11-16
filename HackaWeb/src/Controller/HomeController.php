@@ -15,4 +15,28 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/hackatons', name: 'app_hackatons')]
+    public function hackatons(): Response
+    {
+        return $this->render('hackaton/hackatons.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/connection', name: 'app_connection')]
+    public function connection(): Response
+    {
+        return $this->render('connection/connection.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/inscription', name: 'app_inscription')]
+    public function inscription(): Response
+    {
+        return $this->render('inscription/inscription.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
 }
