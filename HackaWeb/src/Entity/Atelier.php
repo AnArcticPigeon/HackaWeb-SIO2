@@ -11,6 +11,8 @@ class Atelier extends Evenement
     #[ORM\Column]
     private ?int $nbPlace = null;
 
+    
+
     public function getNbPlace(): ?int
     {
         return $this->nbPlace;
@@ -22,4 +24,6 @@ class Atelier extends Evenement
 
         return $this;
     }
+
 }
+    

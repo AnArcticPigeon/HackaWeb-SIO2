@@ -39,10 +39,13 @@ class Hackaton
 
     
 
+    
+
     public function __construct()
     {
         $this->lesUtilisateur = new ArrayCollection();
         $this->lesEvenement = new ArrayCollection();
+        $this->lesAtelier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,6 +156,8 @@ class Hackaton
 
         return $this;
     }
+
+    
 
  
 }
