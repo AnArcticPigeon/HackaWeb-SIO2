@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\HackatonRepository;
 
 class HomeController extends AbstractController
 {
@@ -17,10 +18,17 @@ class HomeController extends AbstractController
     }
 
     #[Route('/hackatons', name: 'app_hackatons')]
-    public function hackatons(): Response
+    public function hackatons(HackatonRepository $repos): Response
     {
+        $listeHackatons= $repos->findall();
+
+
         return $this->render('hackaton/hackatons.html.twig', [
             'controller_name' => 'HomeController',
+            'listeHackatons' => $listeHackatons
+
+
+
         ]);
     }
 

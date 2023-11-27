@@ -28,6 +28,9 @@ class Evenement
     #[ORM\ManyToOne(inversedBy: 'lesEvenement')]
     private ?Hackaton $leHackaton = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $salle = null;
+
 
 
     public function __construct()
@@ -84,6 +87,18 @@ class Evenement
     public function setLeHackaton(?Hackaton $leHackaton): static
     {
         $this->leHackaton = $leHackaton;
+
+        return $this;
+    }
+
+    public function getSalle(): ?string
+    {
+        return $this->salle;
+    }
+
+    public function setSalle(string $salle): static
+    {
+        $this->salle = $salle;
 
         return $this;
     }

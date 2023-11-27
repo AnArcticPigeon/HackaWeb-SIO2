@@ -13,12 +13,13 @@
     <div class="container mt-5">
         <h1>Liste des Hackatons</h1>
         <ul class="list-group">
-            {# {% for hackaton in hackatons %}
+             {% for hackaton in listeHackatons %}
                 <li class="list-group-item">
-                    <h5>{{ hackaton.name }}</h5>
-                    <p>{{ hackaton.description }}</p>
+                    <h2>{{ hackaton.theme }}</h2>
+                    
+                    <a class="btn btn-primary" href="" role="button">Link</a>
                 </li>
-            {% endfor %}#}
+            {% endfor %}
         </ul>
     </div>
 </div>
