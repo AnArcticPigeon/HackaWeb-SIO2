@@ -22,9 +22,6 @@ class Hackaton
     #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateFin')]
     private ?\DateTimeInterface $dateFin = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateLimit')]
-    private ?\DateTimeInterface $dateLimit = null;
-
     #[ORM\Column ( name:'nbPlace')]
     private ?int $nbPlace = null;
 
@@ -37,6 +34,13 @@ class Hackaton
     #[ORM\OneToMany(mappedBy: 'leHackaton', targetEntity: Evenement::class )]
     private Collection $lesEvenement;
 
+    #[ORM\OneToMany(mappedBy: 'leHackaton', targetEntity: Equipe::class)]
+    private Collection $lesequipe;
+
+    #[ORM\JoinColumn(name: "idVille", referencedColumnName :"id")]
+    #[ORM\ManyToOne(inversedBy: 'lesHackaton')]
+    private ?Ville $laVille = null;
+
     
 
     
@@ -46,6 +50,7 @@ class Hackaton
         $this->lesUtilisateur = new ArrayCollection();
         $this->lesEvenement = new ArrayCollection();
         $this->lesAtelier = new ArrayCollection();
+        $this->lesequipe = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,18 +78,6 @@ class Hackaton
     public function setDateFin(\DateTimeInterface $dateFin): static
     {
         $this->dateFin = $dateFin;
-
-        return $this;
-    }
-
-    public function getDateLimit(): ?\DateTimeInterface
-    {
-        return $this->dateLimit;
-    }
-
-    public function setDateLimit(\DateTimeInterface $dateLimit): static
-    {
-        $this->dateLimit = $dateLimit;
 
         return $this;
     }
@@ -153,6 +146,48 @@ class Hackaton
                 $lesEvenement->setLeHackaton(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Equipe>
+     */
+    public function getLesequipe(): Collection
+    {
+        return $this->lesequipe;
+    }
+
+    public function addLesequipe(Equipe $lesequipe): static
+    {
+        if (!$this->lesequipe->contains($lesequipe)) {
+            $this->lesequipe->add($lesequipe);
+            $lesequipe->setLeHackaton($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesequipe(Equipe $lesequipe): static
+    {
+        if ($this->lesequipe->removeElement($lesequipe)) {
+            // set the owning side to null (unless already changed)
+            if ($lesequipe->getLeHackaton() === $this) {
+                $lesequipe->setLeHackaton(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLaVille(): ?Ville
+    {
+        return $this->laVille;
+    }
+
+    public function setLaVille(?Ville $laVille): static
+    {
+        $this->laVille = $laVille;
 
         return $this;
     }

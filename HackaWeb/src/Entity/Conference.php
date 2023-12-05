@@ -12,9 +12,10 @@ class Conference extends Evenement
     #[ORM\Column(length: 255)]
     private ?string $theme = null;
 
-    #[ORM\ManyToOne(inversedBy: 'lesConference')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Intervenant $lintervenant = null;
+    #[ORM\JoinColumn(name: "idIntervenant", referencedColumnName :"id")]
+    #[ORM\ManyToOne(inversedBy: 'lesConference' )]
+    private ?Intervenant $lIntervenant = null;
+
 
   
     public function getTheme(): ?string
@@ -29,15 +30,17 @@ class Conference extends Evenement
         return $this;
     }
 
-    public function getLintervenant(): ?Intervenant
+    public function getLIntervenant(): ?Intervenant
     {
-        return $this->lintervenant;
+        return $this->lIntervenant;
     }
 
-    public function setLintervenant(?Intervenant $lintervenant): static
+    public function setLIntervenant(?Intervenant $lIntervenant): static
     {
-        $this->lintervenant = $lintervenant;
+        $this->lIntervenant = $lIntervenant;
 
         return $this;
     }
+
+   
 }

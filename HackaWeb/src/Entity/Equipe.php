@@ -22,11 +22,15 @@ class Equipe
     #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateInsc')]
     private ?\DateTimeInterface $dateInsc = null;
 
-    #[ORM\Column(length: 255 ,name:'numInsc')]
+    #[ORM\Column(length: 255 , name:'numInsc')]
     private ?string $numInsc = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'lesEquipe')]
     private Collection $lesUtilisateur;
+
+    #[ORM\JoinColumn(name: "idHackaton", referencedColumnName :"id")]
+    #[ORM\ManyToOne(inversedBy: 'lesequipe')]
+    private ?Hackaton $leHackaton = null;
 
     public function __construct()
     {
@@ -97,6 +101,18 @@ class Equipe
         if ($this->lesUtilisateur->removeElement($lesUtilisateur)) {
             $lesUtilisateur->removeLesEquipe($this);
         }
+
+        return $this;
+    }
+
+    public function getLeHackaton(): ?Hackaton
+    {
+        return $this->leHackaton;
+    }
+
+    public function setLeHackaton(?Hackaton $leHackaton): static
+    {
+        $this->leHackaton = $leHackaton;
 
         return $this;
     }

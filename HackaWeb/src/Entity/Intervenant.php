@@ -21,7 +21,7 @@ class Intervenant
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\OneToMany(mappedBy: 'lintervenant', targetEntity: Conference::class)]
+    #[ORM\OneToMany(mappedBy: 'lIntervenant', targetEntity: Conference::class)]
     private Collection $lesConference;
 
     public function __construct()
@@ -70,7 +70,7 @@ class Intervenant
     {
         if (!$this->lesConference->contains($lesConference)) {
             $this->lesConference->add($lesConference);
-            $lesConference->setLintervenant($this);
+            $lesConference->setLIntervenant($this);
         }
 
         return $this;
@@ -80,8 +80,8 @@ class Intervenant
     {
         if ($this->lesConference->removeElement($lesConference)) {
             // set the owning side to null (unless already changed)
-            if ($lesConference->getLintervenant() === $this) {
-                $lesConference->setLintervenant(null);
+            if ($lesConference->getLIntervenant() === $this) {
+                $lesConference->setLIntervenant(null);
             }
         }
 

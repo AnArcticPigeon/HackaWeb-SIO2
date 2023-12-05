@@ -9,6 +9,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(['theme' => Conference::class, 'place' => Atelier::class])]
 class Evenement
 {
     #[ORM\Id]
@@ -25,6 +28,7 @@ class Evenement
     #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateLimit')]
     private ?\DateTimeInterface $DateLimit = null;
 
+    #[ORM\JoinColumn(name: "idHackaton", referencedColumnName :"id")]
     #[ORM\ManyToOne(inversedBy: 'lesEvenement')]
     private ?Hackaton $leHackaton = null;
 
