@@ -9,6 +9,22 @@
 </style>
 
 <div class="example-wrapper">
+<div class="card" style="width: 75%; margin-top:10%">
+     <div class="card-body">
+     <center><h2>Inscription</h2></center>
+        {{ form_start(formAddUtilisateur) }}
+        {{ form_row(formAddUtilisateur.nom) }}
+        {{ form_row(formAddUtilisateur.prenom) }}
+        {{ form_row(formAddUtilisateur.email) }}
+        {{ form_row(formAddUtilisateur.tel) }}
+        {{ form_row(formAddUtilisateur.dateNaiss) }}
+        {{ form_row(formAddUtilisateur.mdp) }}
+        <center>
+            <button type="submit" class="btn btn-primary" name="btnInscription">Créer</button>
+        </center>
+        {{ form_end(formAddUtilisateur) }}
+    </div>
+</div>
 
 </div>
 {% endblock %}

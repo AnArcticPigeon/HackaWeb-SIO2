@@ -3,12 +3,41 @@
 {% block title %}Conection{% endblock %}
 
 {% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+    </div>
+{% endfor %}
+{% if errors %}
+    <div class="alert alert-danger">
+        {{ errors.messageKey|trans(errors.messageData, 'security') }}
+    </div>
+{% endif %}
+
+
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
 <div class="example-wrapper">
-
+    <center>
+    <div class="card" style="width: 60%; margin-top:25%">
+      <div class="card-body">
+       <center><h2 class="card-title">Connection</h3></center>
+        <form  action="{{ path('app_login') }}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Identifiant</label>
+            <input type="text" class="form-control" id="login" name="_username"  value="{{ last_username }}" placeholder="email@gmail.com">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Mots de Passe</label>
+            <input type="password" class="form-control" id="password" name="_password" placeholder="UnMDPsuperDuperSecret!">
+        </div>
+        <center><button type="submit" class="btn btn-primary">Se Connecter</button></center>
+        </form>
+    </div>
+</div>
+</center>
 </div>
 {% endblock %}

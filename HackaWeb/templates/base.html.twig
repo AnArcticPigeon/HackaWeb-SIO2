@@ -16,31 +16,45 @@
 
         {% block javascripts %}
         {% endblock %}
+        
     </head>
     <header>
-            <div class="card text-center">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Hackaton</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{path('app_home')}}">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{path('app_hackatons')}}">Hackatons</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{path('app_connection')}}">Connection</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{path('app_inscription')}}">Inscription</a>
-            </li>
-            </ul>
-        </div>
+        <div class="card text-center">
+        <nav>
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Hackaton</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_home')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{path('app_hackatons')}}">Hackatons</a>
+                    </li>
+                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item" style="margin-left:70%">
+                             <a class="nav-link text-success" href="{{path('app_login')}}">Connexion</a>
+                        </li>
+                        <h4>|</h4>
+                        <li class="nav-item" style="margin-left:0%">
+                            <a class="nav-link" href="{{path('app_inscription')}}">Inscription</a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item " style="margin-left:75%">
+                            <a class="nav-link text-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
         </div>
     </header>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        
+        
+        {% endblock %}
     </body>
 </html>
