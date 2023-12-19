@@ -41,6 +41,9 @@ class Hackaton
     #[ORM\ManyToOne(inversedBy: 'lesHackaton')]
     private ?Ville $laVille = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true,name:'dateLimit')]
+    private ?\DateTimeInterface $DateLimit = null;
+
     
 
     
@@ -188,6 +191,18 @@ class Hackaton
     public function setLaVille(?Ville $laVille): static
     {
         $this->laVille = $laVille;
+
+        return $this;
+    }
+
+    public function getDateLimit(): ?\DateTimeInterface
+    {
+        return $this->DateLimit;
+    }
+
+    public function setDateLimit(?\DateTimeInterface $DateLimit): static
+    {
+        $this->DateLimit = $DateLimit;
 
         return $this;
     }
