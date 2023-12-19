@@ -1,26 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HackatonController!{% endblock %}
+{% block title %}Hello HackatonController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
 
-<div class="example-wrapper">
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
 
-    <div class="container mt-5">
-        <h1>Liste des Hackatons</h1>
-        <ul class="list-group">
-             {% for hackaton in listeHackatons %}
-                <li class="list-group-item">
-                    <h2>{{ hackaton.theme }}</h2>
-                    
-                    <a class="btn btn-primary" href="" role="button">Link</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-</div>
+
+	<div class="example-wrapper">
+
+		<div class="container mt-5">
+			<h1>Liste des Hackatons</h1>
+		</div>
+
+		<div class="list-group">
+			<table data-toggle="table" data-search="true" data-pagination="true" data-page-size="20">
+				<thead>
+					<tr>
+						<th scope="col">Thème</th>
+						<th scope="col">Date début</th>	
+						<th scope="col">Nombre de places</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for unHackathon in listeHackatons %}
+						<tr>
+							<td>{{unHackathon.theme}}</td>
+              <td>{{unHackathon.dateDeb|date("d/m/Y")}}</td>
+							<td>{{unHackathon.nbPlace}}</td>
+							<td>
+								<a href="{{path('app_hackaton_detail',{id:unHackathon.id})}}" class="btn btn-primary btn-secondary">Infomations</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.js"></script>
 {% endblock %}
