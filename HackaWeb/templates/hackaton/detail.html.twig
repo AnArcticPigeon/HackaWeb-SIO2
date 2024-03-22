@@ -22,6 +22,19 @@
                     <p><strong>Addresse:</strong> {{ unHackaton.addresse }}</p>
                     <p><strong>Date De Debut:</strong> {{ unHackaton.dateDeb|date('d-m-Y') }}</p>
                     <p><strong>Date De Fin:</strong> {{ unHackaton.dateFin|date('d-m-Y') }}</p>
+                
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if estInscrit %}
+                            <a href="" class="btn btn-primary btn-success">Inscrit</a>
+                        {% endif %}
+                        {% if not estInscrit %}
+                            <a href="{{ path('app_choixEquipe',{idHackaton:unHackaton.id}) }}" class="btn btn-primary btn-primary">S'inscrire</a>
+                        {% endif %}
+                    {% endif %}
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('app_login',{id:unHackaton.id}) }}" class="btn btn-primary">S'Inscrire</a>
+                    {% endif %}
 
                 </div>
             </div>

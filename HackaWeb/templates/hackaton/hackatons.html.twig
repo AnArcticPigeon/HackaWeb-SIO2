@@ -4,6 +4,11 @@
 {% endblock %}
 
 {% block body %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success" role="alert">
+        {{message}}
+    </div>
+{% endfor %}
 	<style>
 
 		.example-wrapper {
@@ -16,40 +21,41 @@
 			background: #F5F5F5;
 			padding: 2px 6px;
 		}
+		
 	</style>
 
+<div class="example-wrapper">
+    <div class="container mt-5">
+        <h1>Liste des Hackatons</h1>
+    </div>
 
-	<div class="example-wrapper">
+    <div class="list-group">
+        <table class="table table-striped table-bordered table-rounded" data-toggle="table" data-search="true" data-pagination="true" data-page-size="20">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Thème</th>
+                    <th scope="col">Date début</th>
+                    <th scope="col">Nombre de places</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for unHackathon in listeHackatons %}
+                    <tr>
+                        <td>{{unHackathon.theme}}</td>
+                        <td>{{unHackathon.dateDeb|date("d/m/Y")}}</td>
+                        <td>{{unHackathon.nbPlace}}</td>
+                        <td>
+                            <a href="{{path('app_hackaton_detail',{id:unHackathon.id})}}" class="btn btn-primary btn-secondary">Informations</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-		<div class="container mt-5">
-			<h1>Liste des Hackatons</h1>
-		</div>
 
-		<div class="list-group">
-			<table data-toggle="table" data-search="true" data-pagination="true" data-page-size="20">
-				<thead>
-					<tr>
-						<th scope="col">Thème</th>
-						<th scope="col">Date début</th>	
-						<th scope="col">Nombre de places</th>
-						<th scope="col"></th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for unHackathon in listeHackatons %}
-						<tr>
-							<td>{{unHackathon.theme}}</td>
-              <td>{{unHackathon.dateDeb|date("d/m/Y")}}</td>
-							<td>{{unHackathon.nbPlace}}</td>
-							<td>
-								<a href="{{path('app_hackaton_detail',{id:unHackathon.id})}}" class="btn btn-primary btn-secondary">Infomations</a>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

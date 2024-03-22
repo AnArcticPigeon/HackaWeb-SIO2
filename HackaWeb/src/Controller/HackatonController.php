@@ -24,9 +24,29 @@ class HackatonController extends AbstractController
     {
         $repository = $doctrine->getRepository(Hackaton::class);
         $leHackaton = $repository->find($id);
+        $estInscrit = false;
+
+        if( $this->isGranted('IS_AUTHENTICATED_FULLY') ) {
+            echo("coucou");
+            $lesEquipes = $leHackaton->getLesequipe();
+            foreach ($lesEquipes as $uneEquipe) {
+                dump($uneEquipe->getLesUtilisateur());
+
+                if( $uneEquipe->getLesUtilisateur()->contains($this->getUser()) )  {
+                    $estInscrit = true;
+                    echo("Utilisateur Trouver dans l'equipe ".$uneEquipe->getNomEquipe()."inscrit au hackaton ".$leHackaton->getId());
+                    break;
+                }
+                $estInscrit = false;
+                
+            }
+        }
+        dump("est Inscrit:".$estInscrit);
+
         return $this->render('hackaton/detail.html.twig', [
             'controller_name' => 'HackatonController',
             'unHackaton' => $leHackaton,
+            'estInscrit' => $estInscrit,
         ]);
     }
 }

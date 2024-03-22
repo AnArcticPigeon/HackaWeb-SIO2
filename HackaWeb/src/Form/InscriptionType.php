@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class InscriptionType extends AbstractType
 {
@@ -18,7 +19,8 @@ class InscriptionType extends AbstractType
             ->add('prenom')
             ->add('email')
             ->add('tel' ,null, ['label' => 'Telephone'])
-            ->add('mdp' ,null, ['label' => 'Mot de Passe'])
+            ->add('mdp' , PasswordType::class, [
+                'label' => 'Mot de Passe'])
             //->add('sel')
             ->add('dateNaiss',null, [
                 'label' => 'Date de Naissance',

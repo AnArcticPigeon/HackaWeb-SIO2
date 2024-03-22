@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HackatonController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+<h1>Les Equipes du Hackaton numero: {{ leHackaton.id }}</h1>
+    
+<div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="choix-equipe">
+                <center>
+                    <label for="">Les Equipes</label><br>
+                    <form>
+
+                    <table class="table">
+                        <tbody>
+                            {% for equipe in equipes %}
+                            <tr>
+                                <td> {{ equipe.nomEquipe }} </td>
+                                <td><a href="{{ path('app_rejoindreEquipe', { 'idHackaton': leHackaton.id, 'idEquipe': equipe.id }) }}" class="btn btn-primary btn-secondary">Rejoindre l'équipe</a></td>
+
+                            </tr>
+                            {% endfor %}
+                
+                        </tbody>
+                    </table>
+                    </form>
+        
+                    <a href="{{path('app_inscription')}}" class="btn btn-primary btn-secondary">Créer une Nouvelle Equipe</a>
+
+                </center>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

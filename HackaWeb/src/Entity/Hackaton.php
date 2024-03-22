@@ -44,6 +44,9 @@ class Hackaton
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true,name:'dateLimit')]
     private ?\DateTimeInterface $DateLimit = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom = null;
+
     
 
     
@@ -203,6 +206,18 @@ class Hackaton
     public function setDateLimit(?\DateTimeInterface $DateLimit): static
     {
         $this->DateLimit = $DateLimit;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
