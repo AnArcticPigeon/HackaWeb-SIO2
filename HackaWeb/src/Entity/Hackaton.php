@@ -41,19 +41,14 @@ class Hackaton
     #[ORM\ManyToOne(inversedBy: 'lesHackaton')]
     private ?Ville $laVille = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true,name:'dateLimit')]
-    private ?\DateTimeInterface $DateLimit = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    
-
-    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     public function __construct()
     {
-        $this->lesUtilisateur = new ArrayCollection();
         $this->lesEvenement = new ArrayCollection();
         $this->lesAtelier = new ArrayCollection();
         $this->lesequipe = new ArrayCollection();
@@ -198,31 +193,28 @@ class Hackaton
         return $this;
     }
 
-    public function getDateLimit(): ?\DateTimeInterface
-    {
-        return $this->DateLimit;
-    }
-
-    public function setDateLimit(?\DateTimeInterface $DateLimit): static
-    {
-        $this->DateLimit = $DateLimit;
-
-        return $this;
-    }
-
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(?string $nom): static
+    public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
         return $this;
     }
 
-    
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
 
- 
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+    
 }

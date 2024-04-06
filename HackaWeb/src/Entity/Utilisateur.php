@@ -45,10 +45,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Equipe::class, inversedBy: 'lesUtilisateur')]
     private Collection $lesEquipe;
 
+    #[ORM\JoinTable(name: "utilisateur_hackaton_favoris")]
+    #[ORM\ManyToMany(targetEntity: Hackaton::class)]
+    private Collection $favoris;
+
     public function __construct()
     {
         $this->lesHackaton = new ArrayCollection();
         $this->lesEquipe = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,5 +193,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Hackaton>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Hackaton $favori): static
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Hackaton $favori): static
+    {
+        $this->favoris->removeElement($favori);
+
+        return $this;
+    }
+
 
 }

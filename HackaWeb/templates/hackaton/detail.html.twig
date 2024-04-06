@@ -6,30 +6,57 @@
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+    body {
+        background-color: #f8f9fa;
+    }
+    .hackaton-detail {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .poster {
+        border: 4px solid #343a40;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 100%; 
+        height: auto;
+    }
+
 </style>
 
 <div class="example-wrapper">
+    <h1><strong>Le Hackaton</h1>
 
-<h1>Le Hackaton</h1>
-    
-<div class="container mt-5">
+    <div class="container mt-5">
         <div class="row">
+            <div class="col-md-4 text-center">
+                <img src=" {{ unHackaton.image }} " alt="" class="img-fluid poster">
+            </div>
             <div class="col-md-8">
                 <div class="hackaton-detail">
+                    <u><h1 class="mb-4"> {{ unHackaton.nom }}</h1></u>
                     <p><strong>Theme:</strong> {{ unHackaton.theme }}</p>
-                    <p><strong>Nombres de Place:</strong> {{ unHackaton.nbPlace }}</p>
-                    <p><strong>Ville:</strong> {{ unHackaton.laVille.nom }}</p>
-                    <p><strong>Addresse:</strong> {{ unHackaton.addresse }}</p>
-                    <p><strong>Date De Debut:</strong> {{ unHackaton.dateDeb|date('d-m-Y') }}</p>
-                    <p><strong>Date De Fin:</strong> {{ unHackaton.dateFin|date('d-m-Y') }}</p>
-                
+                    <p><strong>Date Début:</strong> {{ unHackaton.dateDeb |date('d/m/Y') }}</p>
+                    <p><strong>Date Fin:</strong> {{ unHackaton.dateFin |date('d/m/Y') }}</p>
+                    <p><strong>Date Limite d'Inscription:</strong> {{ dateLimite |date('d/m/Y')}}</p>
+                    <p><strong>Places Restante:</strong> {{ unHackaton.nbPlace - nbInscrit }} / {{ unHackaton.nbPlace }}</p>
 
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         {% if estInscrit %}
                             <a href="" class="btn btn-primary btn-success">Inscrit</a>
                         {% endif %}
                         {% if not estInscrit %}
-                            <a href="{{ path('app_choixEquipe',{idHackaton:unHackaton.id}) }}" class="btn btn-primary btn-primary">S'inscrire</a>
+                            {% if dateActuelle <= dateLimite %}
+                                <a href="{{ path('app_choixEquipe',{idHackaton:unHackaton.id}) }}" class="btn btn-primary btn-primary">S'inscrire</a>
+                            {% else %}
+                                <button type="button" class="btn btn-lg btn-primary" disabled>Inscriptions Terminer</button>
+                            {% endif %}
+
+                            
+                            
                         {% endif %}
                     {% endif %}
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -40,6 +67,6 @@
             </div>
         </div>
     </div>
-
 </div>
+    
 {% endblock %}

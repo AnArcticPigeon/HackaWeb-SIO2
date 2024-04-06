@@ -21,20 +21,22 @@ class HackatonRepository extends ServiceEntityRepository
         parent::__construct($registry, Hackaton::class);
     }
 
-//    /**
-//     * @return Hackaton[] Returns an array of Hackaton objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('h.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getDateLimite(int $id) {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT DateLimite(:id) AS DateLimite;';
+        $resultSet = $conn->executeQuery($sql, ['id' => $id]);
+
+        return $resultSet->fetchAssociative();
+    }
+
+    public function getNbInscrit(int $id) {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT nbParticipant(:id) AS nbInscrit;';
+        $resultSet = $conn->executeQuery($sql, ['id' => $id]);
+
+        return $resultSet->fetchAssociative();
+    }
+
 
 //    public function findOneBySomeField($value): ?Hackaton
 //    {
