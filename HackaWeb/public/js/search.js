@@ -1,19 +1,22 @@
-        // search bar
-        document.getElementById("searchInput").addEventListener("input", function(event) {
-            let searchInputValue = document.getElementById("searchInput").value;
+// search bar
+document.getElementById("searchInput").addEventListener("input", function(event) {
+    let searchInputValue = document.getElementById("searchInput").value;
 
-            let mesCards = document.getElementsByClassName("cardClass");
+    // recupere toute les card presente dans la page
+    let mesCards = document.getElementsByClassName("cardClass");
 
-            for (let i = 0; i < mesCards.length; i++) {
-            let cardText = mesCards[i].textContent.toLowerCase();
+    for (let i = 0; i < mesCards.length; i++) {
+    
+        //recupere tout le text present dans une card
+        let cardText = mesCards[i].textContent.toLowerCase();
 
-            if (!cardText.includes(searchInputValue.toLowerCase())) {
-
-                mesCards[i].style.display = "none";
-            } else {
-
-                mesCards[i].style.display = "block";
-            }
+        // test si le string chercher par l'utilisateur est prrésent dans le text present dans une card
+        if (!cardText.includes(searchInputValue.toLowerCase())) {
+            // si le string n'est pas present on cache la card
+            mesCards[i].style.display = "none";
+        } else {
+            // si le string est present on affiche la card
+            mesCards[i].style.display = "block";
         }
-
-        })
+    }
+})

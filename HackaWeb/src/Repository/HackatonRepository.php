@@ -21,7 +21,8 @@ class HackatonRepository extends ServiceEntityRepository
         parent::__construct($registry, Hackaton::class);
     }
 
-    public function getDateLimite(int $id) {
+    public function getDateLimite(int $id): array
+    {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT DateLimite(:id) AS DateLimite;';
         $resultSet = $conn->executeQuery($sql, ['id' => $id]);
@@ -29,7 +30,8 @@ class HackatonRepository extends ServiceEntityRepository
         return $resultSet->fetchAssociative();
     }
 
-    public function getNbInscrit(int $id) {
+    public function getNbInscrit(int $id): array
+    {
         $conn = $this->getEntityManager()->getConnection();
         $sql = 'SELECT nbParticipant(:id) AS nbInscrit;';
         $resultSet = $conn->executeQuery($sql, ['id' => $id]);
@@ -38,13 +40,13 @@ class HackatonRepository extends ServiceEntityRepository
     }
 
 
-//    public function findOneBySomeField($value): ?Hackaton
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Hackaton
+    //    {
+    //        return $this->createQueryBuilder('h')
+    //            ->andWhere('h.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

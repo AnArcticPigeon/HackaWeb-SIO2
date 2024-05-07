@@ -15,24 +15,19 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HackatonController extends AbstractController
 {
-    // inutilisée, la vrai toute hackaton est dans HomeController
-    #[Route('/hackaton', name: 'app_hackaton')]
-    public function index(): Response
-    {
-       
-        return $this->render('hackaton/hackatons.html.twig', [
-            'controller_name' => 'HackatonController',
-        ]);
-    }
-
-    // detail d'un hackaton
+    /**
+     * Affiche le détail d'un hackaton
+     * @param $id
+     * @param HackatonRepository $hackatonRepository
+     * @return Response
+     */
     #[Route('/hackaton/{id}', name: 'app_hackaton_detail')]
-    public function detail($id, ManagerRegistry $doctrine, HackatonRepository $hackatonRepository): Response
+    public function detail(int $id, ManagerRegistry $doctrine, HackatonRepository $hackatonRepository): Response
     {
         $repository = $doctrine->getRepository(Hackaton::class);
         $leHackaton = $repository->find($id);
         $estInscrit = false;
-        
+
 
         $dateLimiteHackaton = $hackatonRepository->getDateLimite($id);
         $dateLimiteHackaton = new DateTime($dateLimiteHackaton['DateLimite']);
@@ -40,18 +35,17 @@ class HackatonController extends AbstractController
         $nbInscrit = $hackatonRepository->getNbInscrit($id);
         $nbInscrit = $nbInscrit['nbInscrit'];
 
-        if( $this->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             $lesEquipes = $leHackaton->getLesequipe();
             foreach ($lesEquipes as $uneEquipe) {
                 dump($uneEquipe->getLesUtilisateur());
 
-                if( $uneEquipe->getLesUtilisateur()->contains($this->getUser()) )  {
+                if($uneEquipe->getLesUtilisateur()->contains($this->getUser())) {
                     $estInscrit = true;
-                    echo("Utilisateur Trouver dans l'equipe ".$uneEquipe->getNomEquipe()."inscrit au hackaton ".$leHackaton->getId());
                     break;
                 }
                 $estInscrit = false;
-                
+
             }
         }
 
@@ -65,18 +59,14 @@ class HackatonController extends AbstractController
         ]);
     }
 
-    // nombre d'inscrit a un hackaton
-    #[Route('/hackaton/{id}/nbInscrit', name: 'app_hackaton_nbInscrit')]
-    public function nbInscrit($id, ManagerRegistry $doctrine)
-    {
-
-
-
-    }
-
-
+    /**
+     * Ajout ou suppression d'un hackathon dans la collection les favoris de l'utilisateur
+     * @param $id
+     * @param ManagerRegistry $doctrine
+     * @return JsonResponse
+     */
     #[Route('/hackaton/{id}/favori', name: 'app_hackathon_favori')]
-    public function hackathon_favori($id, ManagerRegistry $doctrine)
+    public function hackathon_favori(int $id, ManagerRegistry $doctrine)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -85,21 +75,20 @@ class HackatonController extends AbstractController
 
         $repository = $doctrine->getRepository(Hackaton::class);
 
-        if ( !$repository->find($id) ) {
+        if (!$repository->find($id)) {
             throw $this->createNotFoundException('Hackathon Introuvable');
         }
 
         $leHackaton = $repository->find($id);
 
-        if( !$user->getFavoris()->contains($leHackaton) ) {
+        if(!$user->getFavoris()->contains($leHackaton)) {
             $user->addFavori($leHackaton);
             $data = [
                 'id' => $id,
                 'message' => 'Hackathon ajouté aux favoris',
                 'isFavorite' => true
             ];
-        }
-        else{
+        } else {
             $user->removeFavori($leHackaton);
             $data = [
                 'id' => $id,
@@ -107,12 +96,10 @@ class HackatonController extends AbstractController
                 'isFavorite' => false
             ];
         }
-    
-        $entityManager=$doctrine->getManager();
+
+        $entityManager = $doctrine->getManager();
         $entityManager->persist($leHackaton);
         $entityManager->flush();
-
-        
 
         return new JsonResponse($data);
     }

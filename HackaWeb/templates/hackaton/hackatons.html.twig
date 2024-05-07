@@ -43,14 +43,14 @@
                 <div name="divPadding" style="flex: 0 0 auto; height: 0;"> <!-- Set the height to 0 by default -->
                 </div>
                 <div name="divFooter" class="card-footer text-muted">
-                    <div style="float: left;">
-                        <h5><b>{{unHackathon.nom}}</b></h5>
-                        <h8>Théme: {{unHackathon.theme}}</h8><br>
-                        <h8>Date: </h8><br>
+                    <center><h5><u><i><strong>{{unHackathon.nom}}</strong></i></u></h5></center>
+                    <div style="float: left;" width="100%">
+                        <h8><b>Théme: </b>{{unHackathon.theme}}</h8><br>
+                        <h8><b>Date: </b></h8><br>
                             <h9>
                                 {{unHackathon.dateDeb|date("m/Y")}} - {{unHackathon.dateFin|date("m/Y")}}<br>
                             </h9>
-                        <h8>Places: {{unHackathon.nbPlace}}</h8><br>
+                        <h8><b>Places:</b> {{unHackathon.nbPlace}}</h8><br>
                     </div>
                     <div style="text-align: center;">
                         <a href="{{path('app_hackaton_detail',{id:unHackathon.id})}}" class="btn btn-primary">Informations</a>

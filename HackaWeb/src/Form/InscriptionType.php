@@ -18,11 +18,11 @@ class InscriptionType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('email')
-            ->add('tel' ,null, ['label' => 'Telephone'])
-            ->add('mdp' , PasswordType::class, [
+            ->add('tel', null, ['label' => 'Telephone'])
+            ->add('mdp', PasswordType::class, [
                 'label' => 'Mot de Passe'])
             //->add('sel')
-            ->add('dateNaiss',null, [
+            ->add('dateNaiss', null, [
                 'label' => 'Date de Naissance',
                 'years' => range(date('Y') - 100, date('Y') - 8),])
             //->add('lesEquipe')

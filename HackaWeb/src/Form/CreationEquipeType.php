@@ -13,10 +13,7 @@ class CreationEquipeType extends AbstractType
     {
         $builder
             ->add('nomEquipe')
-            ->add('dateInsc')
-            ->add('numInsc')
-            ->add('lesUtilisateur')
-            ->add('leHackaton')
+
         ;
     }
 
