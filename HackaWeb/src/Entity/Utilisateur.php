@@ -121,31 +121,31 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-     //partie Authentification / permisions
-     public function getUserIdentifier(): string
-     {
-         return (string) $this->email;
-     }
- 
-     public function getRoles(): array
-     {
-         $roles = $this->roles;
-         // guarantee every user at least has ROLE_USER
-         $roles[] = 'ROLE_USER';
-         return array_unique($roles);
-     }
- 
-     public function setRoles(array $roles): self
-     {
-         $this->roles = $roles;
-         return $this;
-     }
- 
-     public function eraseCredentials()
-     {
-     // If you store any temporary, sensitive data on the user, clear it here
-     // $this->plainPassword = null;
-     } 
+    //partie Authentification / permisions
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
 
     public function getMdp(): ?string
     {

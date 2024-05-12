@@ -19,6 +19,12 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
+<<<<<<< HEAD
 ###> symfony/asset-mapper ###
 /public/assets/
 ###< symfony/asset-mapper ###
+=======
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+>>>>>>> ac9feda137e90e9ce2a67ab3a43ac8770e6a2e64

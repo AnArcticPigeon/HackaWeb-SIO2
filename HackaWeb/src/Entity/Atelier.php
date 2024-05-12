@@ -22,7 +22,7 @@ class Atelier extends Evenement
         $this->lesParticipant = new ArrayCollection();
     }
 
-    
+
 
     public function getNbPlace(): ?int
     {
@@ -67,4 +67,3 @@ class Atelier extends Evenement
     }
 
 }
-    

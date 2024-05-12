@@ -8,16 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
 class Conference extends Evenement
 {
-
     #[ORM\Column(length: 255)]
     private ?string $theme = null;
 
     #[ORM\JoinColumn(name: "idIntervenant", referencedColumnName :"id")]
-    #[ORM\ManyToOne(inversedBy: 'lesConference' )]
+    #[ORM\ManyToOne(inversedBy: 'lesConference')]
     private ?Intervenant $lIntervenant = null;
 
 
-  
+
     public function getTheme(): ?string
     {
         return $this->theme;
@@ -42,5 +41,5 @@ class Conference extends Evenement
         return $this;
     }
 
-   
+
 }

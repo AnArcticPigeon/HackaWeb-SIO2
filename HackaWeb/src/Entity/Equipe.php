@@ -19,11 +19,8 @@ class Equipe
     #[ORM\Column(length: 255, name:'nomEquipe')]
     private ?string $nomEquipe = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateInsc')]
+    #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateInsc')]
     private ?\DateTimeInterface $dateInsc = null;
-
-    #[ORM\Column(length: 255 , name:'numInsc')]
-    private ?string $numInsc = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'lesEquipe')]
     private Collection $lesUtilisateur;
@@ -62,18 +59,6 @@ class Equipe
     public function setDateInsc(\DateTimeInterface $dateInsc): static
     {
         $this->dateInsc = $dateInsc;
-
-        return $this;
-    }
-
-    public function getNumInsc(): ?string
-    {
-        return $this->numInsc;
-    }
-
-    public function setNumInsc(string $numInsc): static
-    {
-        $this->numInsc = $numInsc;
 
         return $this;
     }

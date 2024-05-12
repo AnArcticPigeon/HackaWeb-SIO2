@@ -20,7 +20,7 @@ class Participant
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $mail = null; 
+    private ?string $mail = null;
 
     #[ORM\JoinColumn(name: "idAtelier", referencedColumnName :"id")]
     #[ORM\ManyToOne(inversedBy: 'lesParticipant')]

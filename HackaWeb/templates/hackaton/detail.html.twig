@@ -42,7 +42,7 @@
                     <p><strong>Date Début:</strong> {{ unHackaton.dateDeb |date('d/m/Y') }}</p>
                     <p><strong>Date Fin:</strong> {{ unHackaton.dateFin |date('d/m/Y') }}</p>
                     <p><strong>Date Limite d'Inscription:</strong> {{ dateLimite |date('d/m/Y')}}</p>
-                    <p><strong>Places Restante:</strong> {{ unHackaton.nbPlace - nbInscrit }} / {{ unHackaton.nbPlace }}</p>
+                    <p><strong>Places:</strong> {{ unHackaton.nbPlace - nbInscrit }} / {{ unHackaton.nbPlace }}</p>
 
                      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         {% if estInscrit %}
@@ -54,9 +54,6 @@
                             {% else %}
                                 <button type="button" class="btn btn-lg btn-primary" disabled>Inscriptions Terminer</button>
                             {% endif %}
-
-                            
-                            
                         {% endif %}
                     {% endif %}
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}

@@ -22,11 +22,8 @@ class Evenement
     #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateDeb')]
     private ?\DateTimeInterface $dateDeb = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE , name:'dateFin')]
+    #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateFin')]
     private ?\DateTimeInterface $dateFin = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, name:'dateLimit')]
-    private ?\DateTimeInterface $DateLimit = null;
 
     #[ORM\JoinColumn(name: "idHackaton", referencedColumnName :"id")]
     #[ORM\ManyToOne(inversedBy: 'lesEvenement')]
@@ -39,7 +36,7 @@ class Evenement
 
     public function __construct()
     {
-        
+
     }
 
     public function getId(): ?int
@@ -71,18 +68,6 @@ class Evenement
         return $this;
     }
 
-    public function getDateLimit(): ?\DateTimeInterface
-    {
-        return $this->DateLimit;
-    }
-
-    public function setDateLimit(\DateTimeInterface $DateLimit): static
-    {
-        $this->DateLimit = $DateLimit;
-
-        return $this;
-    }
-
     public function getLeHackaton(): ?Hackaton
     {
         return $this->leHackaton;
@@ -107,5 +92,5 @@ class Evenement
         return $this;
     }
 
-    
+
 }

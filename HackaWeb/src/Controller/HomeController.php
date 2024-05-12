@@ -14,7 +14,6 @@ use App\Repository\HackatonRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
@@ -32,23 +31,23 @@ class HomeController extends AbstractController
         $listeHackatonInscrit = [];
         $listeHackatonsFavoris = [];
 
-        if( $this->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
 
             $lesEquipes = $user->getLesEquipe();
 
-            foreach($lesEquipes as $equipe){
+            foreach($lesEquipes as $equipe) {
                 array_push($listeHackatonInscrit, $equipe->getLeHackaton());
             }
 
             $userFavoris = $user->getFavoris();
 
-            foreach($userFavoris as $favoris){
+            foreach($userFavoris as $favoris) {
                 array_push($listeHackatonsFavoris, $favoris->getId());
             }
             dump($listeHackatonInscrit);
-            
+
         }
 
         return $this->render('hackaton/hackatonsUtilisateur.html.twig', [
@@ -62,25 +61,19 @@ class HomeController extends AbstractController
     #[Route('/hackatons', name: 'app_hackatons')]
     public function hackatons(HackatonRepository $repos): Response
     {
-
         $listeHackatonsFavoris = [];
 
-        if( $this->isGranted('IS_AUTHENTICATED_FULLY') ) {
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
-
             $userFavoris = $user->getFavoris();
 
-            foreach($userFavoris as $favoris){
+            foreach($userFavoris as $favoris) {
                 array_push($listeHackatonsFavoris, $favoris->getId());
             }
-            dump($listeHackatonsFavoris);
-            
-            
         }
 
         $listeHackatons = $repos->findall();
-        dump($listeHackatons);
 
         return $this->render('hackaton/hackatons.html.twig', [
             'controller_name' => 'HomeController',
@@ -90,67 +83,45 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/inscription', name: 'app_inscription')]
-    public function inscription(Request $request, ManagerRegistry $doctrine): Response
-    {
-        $utilisateur = new Utilisateur();
-        $form=$this->createForm(InscriptionType::class, $utilisateur);
-        $form->handleRequest($request);
-        if($form->isSubmitted() and $form->isValid()){
-            $utilisateur->setMdp(password_hash($utilisateur->getMdp(),   PASSWORD_DEFAULT  ));
-            $entityManager=$doctrine->getManager();
-            $entityManager->persist($utilisateur); 
-            $entityManager->flush();
-            $this->addFlash('success', 'Inscription Enregistré');
-            return $this->redirectToRoute('app_login');
-        };
-
-        return $this->render('Inscription/inscription.html.twig', [
-            'controller_name' => 'HomeController',
-            'formAddUtilisateur' => $form -> createView(),
-        ]);
-    }
-
     #[Route('/creation_equipe/{idHackaton}', name: 'app_creation_equipe')]
-    public function creation_equipe($idHackaton, Request $request, ManagerRegistry $doctrine, HackatonRepository $hackatonRepository): Response
+    public function creation_equipe(int $idHackaton, Request $request, ManagerRegistry $doctrine, HackatonRepository $hackatonRepository): Response
     {
         $hackaton = $hackatonRepository->find($idHackaton);
         $equipe = new Equipe();
 
-        $form=$this->createForm(CreationEquipeType::class, $hackaton);
+        $form = $this->createForm(CreationEquipeType::class, $equipe);
         $form->handleRequest($request);
-        if($form->isSubmitted() and $form->isValid()){
-            $entityManager=$doctrine->getManager();
-            $entityManager->persist($equipe); 
+        if($form->isSubmitted() and $form->isValid()) {
+            $equipe->setLeHackaton($hackaton);
+            $equipe->setDateInsc(new \DateTime());
+            $equipe->addLesUtilisateur($this->getUser());
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($equipe);
             $entityManager->flush();
             $this->addFlash('success', 'Equipe Ajoutée');
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_hackatons_utilisateur');
         };
 
-        return $this->render('Inscription/inscription.html.twig', [
+        return $this->render('equipe/creationEquipe.html.twig', [
             'controller_name' => 'HomeController',
-            'formAddUtilisateur' => $form -> createView(),
+            'formAddEquipe' => $form -> createView(),
         ]);
     }
 
     #[Route('/choixEquipe/{idHackaton}', name: 'app_choixEquipe')]
-    public function choixEquipe($idHackaton, ManagerRegistry $doctrine, EquipeRepository $equipeRepo, HackatonRepository $hackatonRepository): Response
+    public function choixEquipe(int $idHackaton, ManagerRegistry $doctrine, EquipeRepository $equipeRepo, HackatonRepository $hackatonRepository): Response
     {
         $leHackaton = $hackatonRepository->find($idHackaton);
-
         $lesEquipes = $equipeRepo->findAll();
 
-        dump($lesEquipes);
-        
-        foreach($lesEquipes as $uneEquipe){
-            if($uneEquipe->getLeHackaton()->getId() != $idHackaton){
+        foreach($lesEquipes as $uneEquipe) {
+            if($uneEquipe->getLeHackaton()->getId() != $idHackaton) {
                 $key = array_search($uneEquipe, $lesEquipes);
                 unset($lesEquipes[$key]);
             }
         }
 
-        dump($lesEquipes);
-        
         return $this->render('equipe/choixEquipe.html.twig', [
             'controller_name' => 'HomeController',
             'equipes' => $lesEquipes,
@@ -159,7 +130,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/rejoindreEquipe/{idHackaton}/{idEquipe}', name: 'app_rejoindreEquipe')]
-    public function rejoindreEquipe($idHackaton,$idEquipe, ManagerRegistry $doctrine, EquipeRepository $equipeRepo, HackatonRepository $hackatonRepository): Response
+    public function rejoindreEquipe(int $idHackaton, int $idEquipe, ManagerRegistry $doctrine, EquipeRepository $equipeRepo, HackatonRepository $hackatonRepository): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -167,14 +138,11 @@ class HomeController extends AbstractController
         $lEquipe = $equipeRepo->find($idEquipe);
         $lEquipe->addLesUtilisateur($utilisateur);
 
-        $entityManager=$doctrine->getManager();
+        $entityManager = $doctrine->getManager();
         $entityManager->persist($lEquipe);
         $entityManager->flush();
 
         $this->addFlash('success', 'Inscription Enregistré');
         return $this->redirectToRoute('app_hackatons');
-
     }
-
-
 }
