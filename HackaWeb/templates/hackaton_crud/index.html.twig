@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hackaton index{% endblock %}
+
+{% block body %}
+    <h1>Hackaton index</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateDeb</th>
+                <th>DateFin</th>
+                <th>NbPlace</th>
+                <th>Theme</th>
+                <th>Addresse</th>
+                <th>Nom</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hackaton in hackatons %}
+            <tr>
+                <td>{{ hackaton.id }}</td>
+                <td>{{ hackaton.dateDeb ? hackaton.dateDeb|date('Y-m-d') : '' }}</td>
+                <td>{{ hackaton.dateFin ? hackaton.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ hackaton.nbPlace }}</td>
+                <td>{{ hackaton.theme }}</td>
+                <td>{{ hackaton.addresse }}</td>
+                <td>{{ hackaton.nom }}</td>
+                <td>{{ hackaton.image }}</td>
+                <td>
+                    <a href="{{ path('app_hackaton_crud_show', {'id': hackaton.id}) }}" class="btn btn-primary">Show</a>
+                    <a href="{{ path('app_hackaton_crud_edit', {'id': hackaton.id}) }}" class="btn btn-secondary">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_hackaton_crud_new') }}" class="btn btn-success">Create new</a>
+{% endblock %}

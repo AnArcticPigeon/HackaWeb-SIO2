@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Hackaton{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="mt-5">Create new Hackaton</h1>
+
+                {{ include('hackaton_crud/_form.html.twig') }}
+
+                <a href="{{ path('app_hackaton_crud_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

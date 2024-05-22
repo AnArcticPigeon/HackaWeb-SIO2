@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hackaton{% endblock %}
+
+{% block body %}
+    <h1>Hackaton</h1>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hackaton.id }}</td>
+            </tr>
+            <tr>
+                <th>DateDeb</th>
+                <td>{{ hackaton.dateDeb ? hackaton.dateDeb|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ hackaton.dateFin ? hackaton.dateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NbPlace</th>
+                <td>{{ hackaton.nbPlace }}</td>
+            </tr>
+            <tr>
+                <th>Theme</th>
+                <td>{{ hackaton.theme }}</td>
+            </tr>
+            <tr>
+                <th>Addresse</th>
+                <td>{{ hackaton.addresse }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ hackaton.nom }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ hackaton.image }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_hackaton_crud_index') }}" class="btn btn-primary">back to list</a>
+
+    <a href="{{ path('app_hackaton_crud_edit', {'id': hackaton.id}) }}" class="btn btn-secondary">edit</a>
+
+    {{ include('hackaton_crud/_delete_form.html.twig') }}
+{% endblock %}
